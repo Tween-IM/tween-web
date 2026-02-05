@@ -39,7 +39,7 @@ export const legacyOAuthHomeserver: Fixtures = {
                         authorization_endpoint: `http://localhost:${port}/oauth/auth.html`,
                         // the token endpoint receives requests from synapse,
                         // rather than the webapp, so needs to escape the docker container.
-                        token_endpoint: `http://host.testcontainers.internal:${port}/oauth/token`,
+                        token_endpoint: `http://host.testcontainers.internal:${port}/oauth2/token`,
                         userinfo_endpoint: `http://host.testcontainers.internal:${port}/oauth/userinfo`,
                         client_id: "synapse",
                         discover: false,

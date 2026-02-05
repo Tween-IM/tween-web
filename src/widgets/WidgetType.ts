@@ -17,10 +17,28 @@ export class WidgetType {
     public constructor(
         public readonly preferred: string,
         public readonly legacy: string,
-    ) {}
+    ) { }
 
     public matches(type: string): boolean {
         return type === this.preferred || type === this.legacy;
+    }
+
+    /**
+     * Static method to match a widget type against a pattern.
+     * Supports wildcard patterns like "m.tween.*"
+     * @param type - The widget type string to check
+     * @param pattern - The pattern to match against (may include wildcards)
+     * @returns Whether the type matches the pattern
+     */
+    public static matches(type: string, pattern: string): boolean {
+        // Handle wildcard patterns (e.g., "m.tween.*")
+        if (pattern.endsWith(".*")) {
+            const prefix = pattern.slice(0, -2); // Remove ".*" suffix
+            return type.startsWith(prefix);
+        }
+
+        // Exact match
+        return type === pattern;
     }
 
     public static fromString(type: string): WidgetType {

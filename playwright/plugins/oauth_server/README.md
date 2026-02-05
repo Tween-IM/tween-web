@@ -9,7 +9,7 @@ The following endpoints are exposed:
   auth code that can be changed if we want the next step to fail). It redirects back to the calling application
   with a "code".
 
-- `/oauth/token`: An OAuth2 [token endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
+- `/oauth2/token`: An OAuth2 [token endpoint](https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint).
   Receives the code issued by "auth.html" and, if it is valid, exchanges it for an OAuth2 access token.
 
 - `/oauth/userinfo`: An OAuth2 [userinfo endpoint](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo).

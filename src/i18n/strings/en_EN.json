@@ -155,7 +155,8 @@
         "yes": "Yes",
         "yes_dismiss": "Yes, dismiss",
         "zoom_in": "Zoom in",
-        "zoom_out": "Zoom out"
+        "zoom_out": "Zoom out",
+        "send": "Send"
     },
     "analytics": {
         "accept_button": "That's fine",
@@ -602,7 +603,9 @@
         "video_room": "Video room",
         "view_message": "View message",
         "voice": "Voice",
-        "warning": "Warning"
+        "warning": "Warning",
+        "amount": "Amount",
+        "sending": "Sending"
     },
     "composer": {
         "autocomplete": {
@@ -661,7 +664,7 @@
         "stop_voice_message": "Stop recording",
         "voice_message_button": "Voice Message"
     },
-    "console_dev_note": "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!",
+    "console_dev_note": "If you know what you're doing, Tween is open-source, be sure to check out our GitHub (https://github.com/Tween-IM/tween-web) and contribute!",
     "console_scam_warning": "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!",
     "console_wait": "Wait!",
     "create_room": {
@@ -1133,11 +1136,11 @@
         "hs_blocked": "This homeserver has been blocked by its administrator.",
         "invalid_configuration_mixed_server": "Invalid configuration: a default_hs_url can't be specified along with default_server_name or default_server_config",
         "invalid_configuration_no_server": "Invalid configuration: no default server specified.",
-        "invalid_json": "Your Element configuration contains invalid JSON. Please correct the problem and reload the page.",
+        "invalid_json": "Your %(brand)s configuration contains invalid JSON. Please correct the problem and reload the page.",
         "invalid_json_detail": "The message from the parser is: %(message)s",
         "invalid_json_generic": "Invalid JSON",
         "mau": "This homeserver has hit its Monthly Active User limit.",
-        "misconfigured": "Your Element is misconfigured",
+        "misconfigured": "Your Tween is misconfigured",
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
         "non_urgent_echo_failure_toast": "Your server isn't responding to some <a>requests</a>.",
         "resource_limits": "This homeserver has exceeded one of its resource limits.",
@@ -1150,6 +1153,7 @@
             "title": "Unable to restore session"
         },
         "something_went_wrong": "Something went wrong!",
+        "misconfigured": "Your %(brand)s configuration is invalid",
         "storage_evicted_description_1": "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.",
         "storage_evicted_description_2": "Your browser likely removed this data when running low on disk space.",
         "storage_evicted_title": "Missing session data",
@@ -3991,7 +3995,7 @@
         "disabled_no_perms_start_video_call": "You do not have permission to start video calls",
         "disabled_no_perms_start_voice_call": "You do not have permission to start voice calls",
         "disabled_ongoing_call": "Ongoing call",
-        "element_call": "Element Call",
+        "element_call": "Tween Call",
         "enable_camera": "Turn on camera",
         "enable_microphone": "Unmute microphone",
         "expand": "Return to call",
@@ -4062,8 +4066,63 @@
         "voice_call_using": "Voice call using:",
         "you_are_presenting": "You are presenting"
     },
+    "tmcp": {
+        "store_not_configured": "TMCP Store not configured",
+        "installing": "Installing",
+        "uninstalling": "Uninstalling",
+        "install": "Install",
+        "uninstall": "Uninstall",
+        "mini_app_store": "Apps",
+        "apps": "Apps",
+        "featured_apps": "Featured",
+        "confirm_payment": "Confirm Payment",
+        "unknown_merchant": "Unknown Merchant",
+        "payment_failed": "Payment failed",
+        "payment_error_generic": "An error occurred during payment",
+        "payment_completed": "Payment Completed",
+        "payment_pending": "Payment Pending",
+        "p2p_pending": "Transfer Pending Acceptance",
+        "p2p_sent": "Money Sent",
+        "send_money": "Send Money",
+        "sending_to": "You are sending to %(recipient)s",
+        "p2p_note_placeholder": "Add a note (optional)",
+        "activation_title": "Wallet Activation Required",
+        "activate_wallet": "Activate Wallet",
+        "group_gift": "Group Gift",
+        "individual_gift": "Individual Gift",
+        "unknown_event_type": "Unknown Event: %(type)s",
+        "invalid_amount": "Please enter a valid positive amount",
+        "no_recipient": "No recipient selected",
+        "p2p_error_generic": "An error occurred during transfer",
+        "all_apps": "All Apps",
+        "store_search_placeholder": "Search apps...",
+        "fetch_categories_error": "Failed to load categories",
+        "fetch_apps_error": "Failed to load apps",
+        "fetch_app_error": "Failed to load app details",
+        "install_pending": "Installation in progress...",
+        "install_error": "Failed to install app",
+        "uninstall_pending": "Uninstallation in progress...",
+        "uninstall_confirm": "Are you sure you want to uninstall this app?",
+        "uninstall_error": "Failed to uninstall app",
+        "installed": "Installed",
+        "not_available": "N/A",
+        "version": "Version",
+        "rating": "Rating",
+        "install_count": "Installs",
+        "classification": "Classification",
+        "developer": "Developer",
+        "official": "Official",
+        "verified": "Verified",
+        "community": "Community",
+        "beta": "Beta",
+        "back_to_apps": "Back to Apps",
+        "details": "Details",
+        "installed_apps": "Installed Apps",
+        "browse": "Browse",
+        "search": "Search"
+    },
     "web_default_device_name": "%(appName)s: %(browserName)s on %(osName)s",
-    "welcome_to_element": "Welcome to Element",
+    "welcome_to_element": "Welcome to Tween",
     "widget": {
         "added_by": "Widget added by",
         "capabilities_dialog": {
@@ -4218,5 +4277,9 @@
             "userInputs": "There should not be any personal or page related data.",
             "wordByItself": "A word by itself is easy to guess"
         }
+    },
+    "tmcp_store": {
+        "title": "Mini-App Store",
+        "description": "Browse and install TMCP-compliant mini-apps"
     }
 }

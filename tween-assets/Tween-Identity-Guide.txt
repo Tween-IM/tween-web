@@ -1,0 +1,25 @@
+TWEEN BRAND PLAYBOOK SUMMARY 2024
+=================================
+
+CORE MANTRA:
+Everything that happens between people.
+
+PHILOSOPHY:
+Tween is the invisible layer that enables digital life. We aren't just an app; we are the transport and the threshold between entities.
+
+VISION:
+To define the default digital space where people communicate, transact, and build—seamlessly in one place.
+
+MISSION:
+To deliver a secure, intelligent super-app infrastructure that powers interactions between individuals and systems globally.
+
+COLOR SYSTEM (HEX):
+- Electric Teal (Primary/Accent): #2DD4BF
+- Deep Indigo (Brand Neutral): #1F2A44
+- Midnight foundation: #0B0D17
+
+TYPOGRAPHY:
+- Display: Space Grotesk (Headers)
+- Body: Inter (System UI)
+
+Generated via Tween Brand Portal. All Rights Reserved.

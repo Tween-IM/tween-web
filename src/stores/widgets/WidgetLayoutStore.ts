@@ -50,7 +50,7 @@ interface ContainerValue {
 }
 
 export class WidgetLayoutStore extends ReadyWatchingStore {
-    private static internalInstance: WidgetLayoutStore;
+    private static internalInstance: WidgetLayoutStore | null = null;
 
     // Map: room Id → container → ContainerValue
     private byRoom: MapWithDefault<string, Map<Container, ContainerValue>> = new MapWithDefault(() => new Map());
@@ -64,10 +64,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
     public static get instance(): WidgetLayoutStore {
         if (!this.internalInstance) {
-            this.internalInstance = new WidgetLayoutStore();
-            this.internalInstance.start();
+            const instance = new WidgetLayoutStore();
+            instance.start();
+            this.internalInstance = instance;
         }
-        return this.internalInstance;
+        return this.internalInstance!;
     }
 
     public static emissionForRoom(room: Room): string {

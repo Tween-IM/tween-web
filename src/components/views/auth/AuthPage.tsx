@@ -31,7 +31,7 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
         if (AuthPage.welcomeBackgroundUrl) return AuthPage.welcomeBackgroundUrl;
 
         const brandingConfig = SdkConfig.getObject("branding");
-        AuthPage.welcomeBackgroundUrl = "themes/element/img/backgrounds/lake.jpg";
+        AuthPage.welcomeBackgroundUrl = "themes/element/img/backgrounds/tween-space.png";
 
         const configuredUrl = brandingConfig?.get("welcome_background_url");
         if (configuredUrl) {
@@ -56,28 +56,11 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
             background: "initial",
         };
 
-        const blurStyle: React.CSSProperties = {
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            filter: "blur(40px)",
-            background: pageStyle.background,
-        };
-
         const modalContentStyle: React.CSSProperties = {
             display: "flex",
             zIndex: 1,
             borderRadius: "inherit",
         };
-
-        let modalBlur;
-        if (this.props.addBlur !== false) {
-            // Blur out the background: add a `div` which covers the content behind the modal,
-            // and blurs it out.
-            modalBlur = <div className="mx_AuthPage_modalBlur" style={blurStyle} />;
-        }
 
         const modalClasses = classNames({
             mx_AuthPage_modal: true,
@@ -87,7 +70,6 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
         return (
             <div className="mx_AuthPage" style={pageStyle}>
                 <div className={modalClasses} style={modalStyle}>
-                    {modalBlur}
                     <main
                         className="mx_AuthPage_modalContent"
                         style={modalContentStyle}

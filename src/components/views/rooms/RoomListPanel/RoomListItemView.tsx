@@ -104,7 +104,13 @@ export const RoomListItemView = memo(function RoomListItemView({
                         </div>
                     )}
                 </div>
-                {vm.showHoverMenu && <RoomListItemMenuView className="mx_RoomListItemView_menu" room={room} />}
+                {vm.showHoverMenu && (
+                    <RoomListItemMenuView
+                        className="mx_RoomListItemView_menu"
+                        room={room}
+                        onMenuClick={(e: React.MouseEvent) => e.stopPropagation()}
+                    />
+                )}
 
                 {/* aria-hidden because we summarise the unread count/notification status in a11yLabel variable */}
                 {vm.showNotificationDecoration && (

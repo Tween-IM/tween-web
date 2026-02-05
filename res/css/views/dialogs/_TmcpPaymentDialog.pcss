@@ -1,0 +1,128 @@
+/*
+ * Copyright 2026 Tween IM
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * Copyright 2026 Tween IM
+ */
+
+.mx_TmcpPaymentDialog {
+    --tween-primary: #2dd4bf;
+    --tween-primary-glow: rgba(45, 212, 191, 0.4);
+
+    .mx_TmcpPaymentDialog_content {
+        padding: var(--cpd-space-8x) 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--cpd-space-4x);
+    }
+
+    .mx_TmcpPaymentDialog_merchant {
+        font-size: var(--cpd-font-size-md);
+        font-weight: 500;
+        color: var(--cpd-color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 8px;
+    }
+
+    .mx_TmcpPaymentDialog_amount {
+        font-size: 48px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--cpd-color-text-primary) 0%, var(--tween-primary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: var(--cpd-space-2x) 0;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+
+    .mx_TmcpPaymentDialog_description {
+        font-size: var(--cpd-font-size-md);
+        color: var(--cpd-color-text-primary);
+        max-width: 80%;
+        text-align: center;
+        line-height: 1.5;
+        margin-bottom: 24px;
+    }
+
+    .mx_TmcpPaymentDialog_mfa {
+        margin-top: var(--cpd-space-6x);
+        width: 100%;
+        padding: var(--cpd-space-6x);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--cpd-radius-xl);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+
+        p {
+            margin-bottom: var(--cpd-space-4x);
+            font-weight: 500;
+        }
+    }
+
+    .mx_TmcpPaymentDialog_pin_input {
+        width: 160px;
+        height: 60px;
+        font-size: 32px;
+        text-align: center;
+        letter-spacing: 12px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--cpd-radius-lg);
+        color: var(--tween-primary);
+        transition: all 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--tween-primary);
+            box-shadow: 0 0 15px var(--tween-primary-glow);
+            transform: scale(1.05);
+        }
+    }
+
+    .mx_TmcpPaymentDialog_error {
+        color: var(--cpd-color-text-critical-primary);
+        background: rgba(255, 77, 77, 0.1);
+        padding: var(--cpd-space-3x) var(--cpd-space-6x);
+        border-radius: var(--cpd-radius-md);
+        font-weight: 500;
+        margin-top: 16px;
+    }
+
+    .mx_Dialog_buttons {
+        margin-top: 0;
+    }
+
+    .mx_TmcpPaymentDialog_payButton {
+        background: linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%) !important;
+        border: none !important;
+        min-width: 180px !important;
+        height: 50px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.5px !important;
+        box-shadow: 0 8px 16px var(--tween-primary-glow) !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px var(--tween-primary-glow) !important;
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}

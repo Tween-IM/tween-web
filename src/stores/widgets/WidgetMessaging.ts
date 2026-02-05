@@ -27,8 +27,10 @@ import {
     type IWidget,
     type IWidgetApiErrorResponseData,
     type IWidgetApiRequest,
+    type IWidgetApiRequestData,
     type IWidgetApiRequestEmptyData,
     type IWidgetData,
+    type IWidgetApiResponseData,
     MatrixCapabilities,
     runTemplate,
     Widget,
@@ -45,6 +47,7 @@ import { OwnProfileStore } from "../OwnProfileStore";
 import WidgetUtils from "../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../integrations/IntegrationManagers";
 import { WidgetType } from "../../widgets/WidgetType";
+import { TmcpWidgetDriver } from "./TmcpWidgetDriver";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
@@ -307,7 +310,10 @@ export class WidgetMessaging extends TypedEventEmitter<WidgetMessagingEvent, Wid
         if (this.widgetApi !== null) return;
 
         this.iframe = iframe;
-        const driver = new ElementWidgetDriver(this.widget, this.kind, this.virtual, this.roomId);
+        const isTmcp = WidgetType.matches(this.widget.type, "m.tween.*");
+        const driver = isTmcp
+            ? new TmcpWidgetDriver(this.widget, this.kind, this.virtual, this.roomId)
+            : new ElementWidgetDriver(this.widget, this.kind, this.virtual, this.roomId);
 
         this.widgetApi = new ClientWidgetApi(this.widget, iframe, driver);
         this.widgetApi.once("ready", () => {
@@ -456,6 +462,130 @@ export class WidgetMessaging extends TypedEventEmitter<WidgetMessagingEvent, Wid
                     });
                 }
                 this.widgetApi?.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+            });
+        }
+
+        // TMCP-specific action handlers for Tween Mini-Apps
+        if (WidgetType.matches(this.widget.type, "m.tween.*")) {
+            const driver = this.widgetApi.driver as TmcpWidgetDriver;
+
+            this.widgetApi.on("action:tween.auth.getUserInfo", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const result = await driver.getUserInfo();
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Failed to get user info" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.wallet.getBalance", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const result = await driver.getWalletBalance();
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Failed to fetch balance" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.storage.get", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const data = ev.detail.data as IWidgetApiRequestData;
+                    const result = await driver.getStorage(data?.key as string);
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Failed to fetch storage" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.storage.set", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const data = ev.detail.data as IWidgetApiRequestData;
+                    const result = await driver.setStorage(data?.key as string, data?.value);
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Failed to set storage" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.wallet.pay", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const data = ev.detail.data as IWidgetApiRequestData;
+                    const result = await TmcpWidgetDriver.handlePaymentRequest(this.widget, data);
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Payment failed" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.wallet.sendGift", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const data = ev.detail.data as IWidgetApiRequestData;
+                    const result = await TmcpWidgetDriver.handleGiftRequest(this.widget, data);
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Gift failed" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.auth.requestScopes", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const data = ev.detail.data as IWidgetApiRequestData;
+                    const result = await driver.requestScopes(data?.scopes as string[]);
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Scope request failed" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.auth.getScopes", async (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                try {
+                    const result = await driver.getScopes();
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiResponseData>{ ...result });
+                } catch (error) {
+                    this.widgetApi.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                        error: { message: error instanceof Error ? error.message : "Failed to get scopes" },
+                    });
+                }
+            });
+
+            this.widgetApi.on("action:tween.app.minimize", (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                defaultDispatcher.dispatch({
+                    action: Action.TmcpAppMinimize,
+                    widgetId: this.widget.id,
+                });
+                this.widgetApi.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+            });
+
+            this.widgetApi.on("action:tween.app.maximize", (ev: CustomEvent<IWidgetApiRequest>) => {
+                ev.preventDefault();
+                defaultDispatcher.dispatch({
+                    action: Action.TmcpAppMaximize,
+                    widgetId: this.widget.id,
+                });
+                this.widgetApi.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
             });
         }
 

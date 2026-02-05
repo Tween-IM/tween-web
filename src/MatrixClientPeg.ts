@@ -42,6 +42,7 @@ import { formatList } from "./utils/FormattingUtils";
 import SdkConfig from "./SdkConfig";
 import { setDeviceIsolationMode } from "./settings/controllers/DeviceIsolationModeController.ts";
 import { initialiseDehydrationIfEnabled } from "./utils/device/dehydration";
+import { TmcpAuthManager } from "./tmcp/TmcpAuthManager";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -185,6 +186,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     public unset(): void {
         this.matrixClient = null;
+        TmcpAuthManager.instance.clear();
 
         MatrixActionCreators.stop();
     }

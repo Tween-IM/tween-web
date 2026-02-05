@@ -1,0 +1,57 @@
+/*
+ * Copyright 2026 Tween IM
+ */
+
+.mx_TmcpConsentDialog {
+    --tween-primary: #2dd4bf;
+
+    .mx_TmcpConsentDialog_content {
+        padding: var(--cpd-space-6x) 0;
+    }
+
+    .mx_TmcpConsentDialog_description {
+        font-size: var(--cpd-font-size-md);
+        color: var(--cpd-color-text-primary);
+        margin-bottom: var(--cpd-space-6x);
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .mx_TmcpConsentDialog_scopes {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--cpd-space-4x);
+    }
+
+    .mx_TmcpConsentDialog_scope {
+        padding: var(--cpd-space-4x);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--cpd-radius-xl);
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(45, 212, 191, 0.05);
+            border-color: var(--tween-primary);
+        }
+    }
+
+    .mx_TmcpConsentDialog_scope_name {
+        display: block;
+        font-weight: 700;
+        color: var(--tween-primary);
+        font-size: var(--cpd-font-size-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: var(--cpd-space-1x);
+    }
+
+    .mx_TmcpConsentDialog_scope_desc {
+        font-size: var(--cpd-font-size-sm);
+        color: var(--cpd-color-text-secondary);
+        margin: 0;
+    }
+}

@@ -81,6 +81,7 @@ import {
 } from "./utils/tokens/tokens";
 import { TokenRefresher } from "./utils/oidc/TokenRefresher";
 import { checkBrowserSupport } from "./SupportedBrowser";
+import { TmcpAuthManager } from "./tmcp/TmcpAuthManager";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -1205,6 +1206,13 @@ export function stopMatrixClient(unsetClient = true): void {
     IntegrationManagers.sharedInstance().stopWatching();
     Mjolnir.sharedInstance().stop();
     DeviceListener.sharedInstance().stop();
+    const platform = PlatformPeg.get();
+    if (platform && typeof (platform as any).getPushNotifications === "function") {
+        (platform as any).getPushNotifications()?.disable();
+    }
+
+    TmcpAuthManager.instance.clear();
+
     DMRoomMap.shared()?.stop();
     EventIndexPeg.stop();
     const cli = MatrixClientPeg.get();

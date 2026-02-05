@@ -409,4 +409,30 @@ export enum Action {
      * or keyboard event).
      */
     UserActivity = "user_activity",
+
+    /**
+     * Opens the TMCP payment confirmation dialog.
+     */
+    OpenTmcpPayment = "open_tmcp_payment",
+
+    /**
+     * Result from TMCP payment dialog.
+     */
+    TmcpPaymentResult = "tmcp_payment_result",
+
+    /**
+     * Opens the TMCP gift creation/opening dialog.
+     */
+    OpenTmcpGift = "open_tmcp_gift",
+
+    /**
+     * Result from TMCP gift dialog.
+     */
+    TmcpGiftResult = "tmcp_gift_result",
+
+    /**
+     * Opens the TMCP Mini-App Store.
+     */
+    OpenTmcpStore = "open_tmcp_store",
+    OpenTmcpP2p = "open_tmcp_p2p",
 }

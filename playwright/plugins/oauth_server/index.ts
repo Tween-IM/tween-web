@@ -30,8 +30,8 @@ export class OAuthServer {
         app.use(express.static(__dirname + "/res"));
 
         // token endpoint (see https://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint)
-        app.use("/oauth/token", express.urlencoded({ extended: true }));
-        app.post("/oauth/token", (req, res) => {
+        app.use("/oauth2/token", express.urlencoded({ extended: true }));
+        app.post("/oauth2/token", (req, res) => {
             // if the code is valid, accept it. Otherwise, return an error.
             const code = req.body.code;
             if (code === "valid_auth_code") {

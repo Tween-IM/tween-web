@@ -22,21 +22,27 @@ interface IState {
 }
 
 export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
-    private static readonly internalInstance = (() => {
-        const instance = new ModalWidgetStore();
-        instance.start();
-        return instance;
-    })();
+    private static internalInstance: ModalWidgetStore;
     private modalInstance: IHandle<typeof ModalWidgetDialog> | null = null;
     private openSourceWidgetId: string | null = null;
     private openSourceWidgetRoomId: string | null = null;
 
-    private constructor() {
+    public constructor() {
         super(defaultDispatcher, {});
     }
 
     public static get instance(): ModalWidgetStore {
+        if (!ModalWidgetStore.internalInstance) {
+            ModalWidgetStore.internalInstance = new ModalWidgetStore();
+        }
         return ModalWidgetStore.internalInstance;
+    }
+
+    public static start(): void {
+        if (!ModalWidgetStore.internalInstance) {
+            ModalWidgetStore.internalInstance = new ModalWidgetStore();
+            ModalWidgetStore.internalInstance.start();
+        }
     }
 
     protected async onAction(payload: ActionPayload): Promise<any> {

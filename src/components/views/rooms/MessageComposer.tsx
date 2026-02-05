@@ -600,9 +600,13 @@ export class MessageComposer extends React.Component<IProps, IState> {
                 ? Math.round(this.state.recordingTimeLeftSeconds)
                 : 0;
             controls.push(
-                <Tooltip open={isTooltipOpen} description={formatTimeLeft(secondsLeft)} placement="bottom">
+                <Tooltip
+                    key="tooltip_voice_record"
+                    open={isTooltipOpen}
+                    description={formatTimeLeft(secondsLeft)}
+                    placement="bottom"
+                >
                     <VoiceRecordComposerTile
-                        key="controls_voice_record"
                         ref={this.voiceRecordingButton}
                         room={this.props.room}
                         relation={this.props.relation}
@@ -681,8 +685,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     threadId={threadId ?? null}
                 />
                 <div className="mx_MessageComposer_wrapper">
-                    <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} />
+                    <UserIdentityWarning room={this.props.room} key="user_identity_warning" />
                     <ReplyPreview
+                        key="reply_preview"
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}
                     />

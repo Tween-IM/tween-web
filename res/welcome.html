@@ -1,13 +1,93 @@
 <style type="text/css">
-    /* we deliberately inline style here to avoid flash-of-CSS problems, and to avoid
- * voodoo where we have to set display: none by default
- */
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500&display=swap');
 
-    .mx_Header_title::after {
-        content: "!";
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Caustic water light effect background - behind glass card */
+    .mx_Parent::before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background-image:
+            radial-gradient(ellipse at 20% 30%, rgba(45, 212, 191, 0.15) 0%, transparent 40%),
+            radial-gradient(ellipse at 60% 70%, rgba(45, 212, 191, 0.1) 0%, transparent 40%),
+            radial-gradient(ellipse at 80% 20%, rgba(45, 212, 191, 0.12) 0%, transparent 40%),
+            radial-gradient(ellipse at 40% 50%, rgba(31, 42, 68, 0.08) 0%, transparent 50%);
+        background-size: 100% 100%;
+        animation: causticFlow 20s ease-in-out infinite;
+        pointer-events: none;
+        z-index: -2;
+        opacity: 0.6;
+        mix-blend-mode: overlay;
+        border-radius: 24px;
+    }
+
+    @keyframes causticFlow {
+
+        0%,
+        100% {
+            transform: translate(0, 0) scale(1) rotate(0deg);
+            background-position: 0% 0%, 100% 100%, 50% 50%, 25% 75%;
+        }
+
+        25% {
+            transform: translate(2%, 3%) scale(1.03) rotate(1deg);
+            background-position: 20% 10%, 80% 90%, 60% 40%, 30% 70%;
+        }
+
+        50% {
+            transform: translate(-3%, 2%) scale(1.05) rotate(-1deg);
+            background-position: 10% 30%, 90% 70%, 40% 60%, 35% 65%;
+        }
+
+        75% {
+            transform: translate(3%, -2%) scale(1.02) rotate(0.5deg);
+            background-position: 30% 20%, 70% 80%, 50% 50%, 20% 80%;
+        }
+    }
+
+    @-webkit-keyframes causticFlow {
+
+        0%,
+        100% {
+            -webkit-transform: translate(0, 0) scale(1) rotate(0deg);
+            transform: translate(0, 0) scale(1) rotate(0deg);
+            background-position: 0% 0%, 100% 100%, 50% 50%, 25% 75%;
+        }
+
+        25% {
+            -webkit-transform: translate(2%, 3%) scale(1.03) rotate(1deg);
+            transform: translate(2%, 3%) scale(1.03) rotate(1deg);
+            background-position: 20% 10%, 80% 90%, 60% 40%, 30% 70%;
+        }
+
+        50% {
+            -webkit-transform: translate(-3%, 2%) scale(1.05) rotate(-1deg);
+            transform: translate(-3%, 2%) scale(1.05) rotate(-1deg);
+            background-position: 10% 30%, 90% 70%, 40% 60%, 35% 65%;
+        }
+
+        75% {
+            -webkit-transform: translate(3%, -2%) scale(1.02) rotate(0.5deg);
+            transform: translate(3%, -2%) scale(1.02) rotate(0.5deg);
+            background-position: 30% 20%, 70% 80%, 50% 50%, 20% 80%;
+        }
     }
 
     .mx_Parent {
+        position: relative;
+        text-align: center;
+        padding: 60px 40px;
+        max-width: 480px;
+        width: 100%;
+        margin: 0 auto;
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -17,25 +97,111 @@
         -webkit-flex-direction: column;
         -ms-flex-direction: column;
         flex-direction: column;
-        -webkit-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
         -webkit-box-align: center;
         -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
-        text-align: center;
-        padding: 25px 35px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        backdrop-filter: blur(40px) saturate(180%);
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    /* iOS-style shimmer effect */
+    .mx_Parent::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.03),
+                transparent);
+        animation: shimmer 8s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes shimmer {
+        0% {
+            left: -100%;
+        }
+
+        50%,
+        100% {
+            left: 100%;
+        }
+    }
+
+    .mx_LogoContainer {
+        margin-bottom: 48px;
+        -webkit-animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .mx_Logo {
-        height: 54px;
-        margin-top: 2px;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 28px;
+        display: block;
+        border-radius: 16px;
+        -webkit-filter: drop-shadow(0 8px 24px rgba(45, 212, 191, 0.2));
+        filter: drop-shadow(0 8px 24px rgba(45, 212, 191, 0.2));
+        -webkit-transition: -webkit-transform 0.3s ease;
+        transition: -webkit-transform 0.3s ease;
+        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+    }
+
+    .mx_Logo:hover {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+
+    .mx_Header_title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        letter-spacing: -0.8px;
+        -webkit-animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+    }
+
+    .mx_Tagline {
+        font-size: 14px;
+        color: #2DD4BF;
+        margin-bottom: 12px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        -webkit-animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+    }
+
+    .mx_Header_subtitle {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.6;
+        margin-bottom: 0;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
     }
 
     .mx_ButtonGroup {
-        margin-top: 10px;
+        margin-top: 44px;
+        width: 100%;
+        -webkit-animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
     }
 
     .mx_ButtonRow {
@@ -43,149 +209,314 @@
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        -webkit-justify-content: space-around;
-        -ms-flex-pack: distribute;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        justify-content: space-between;
-        box-sizing: border-box;
-        margin: 12px 0 0;
-    }
-
-    .mx_ButtonRow > * {
-        margin: 0 10px;
-    }
-
-    .mx_ButtonRow > *:first-child {
-        margin-left: 0;
-    }
-
-    .mx_ButtonRow > *:last-child {
-        margin-right: 0;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 28px;
     }
 
     .mx_ButtonParent {
+        display: block;
+        padding: 15px 28px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+        -webkit-transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mx_ButtonParent::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: -webkit-linear-gradient(315deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+        opacity: 0;
+        -webkit-transition: opacity 0.3s ease;
+        transition: opacity 0.3s ease;
+    }
+
+    .mx_ButtonParent:hover::before {
+        opacity: 1;
+    }
+
+    .mx_ButtonParent:active {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    .mx_ButtonSignIn {
+        background: #2DD4BF;
+        color: #0B0D17 !important;
+        box-shadow: 0 2px 12px rgba(45, 212, 191, 0.25);
+    }
+
+    .mx_ButtonSignIn:hover {
+        background: #14b8a6;
+        box-shadow: 0 4px 20px rgba(45, 212, 191, 0.35);
+        -webkit-transform: translateY(-1px);
+        transform: translateY(-1px);
+    }
+
+    .mx_ButtonCreateAccount {
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+
+    .mx_ButtonCreateAccount:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.15);
+        -webkit-transform: translateY(-1px);
+        transform: translateY(-1px);
+    }
+
+    .mx_Divider {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        padding: 10px 20px;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-        flex-direction: row;
-        -webkit-box-pack: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
         -webkit-box-align: center;
         -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
-        border-radius: 4px;
-        width: 150px;
-        background-repeat: no-repeat;
-        background-position: 10px center;
+        margin: 28px 0;
+        -webkit-animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+    }
+
+    .mx_Divider::before,
+    .mx_Divider::after {
+        content: '';
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .mx_Divider span {
+        padding: 0 16px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .mx_ExploreLink {
+        display: inline-block;
+        color: #2DD4BF;
         text-decoration: none;
-        color: #2e2f32 !important;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 40px;
+        padding: 8px 0;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        -webkit-animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards;
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards;
+        position: relative;
     }
 
-    .mx_ButtonLabel {
-        margin-left: 20px;
+    .mx_ExploreLink::after {
+        content: '→';
+        margin-left: 6px;
+        display: inline-block;
+        -webkit-transition: -webkit-transform 0.2s ease;
+        transition: -webkit-transform 0.2s ease;
+        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, -webkit-transform 0.2s ease;
     }
 
-    .mx_Header_title {
-        font-size: 24px;
-        font-weight: 600;
-        margin: 20px 0 0;
+    .mx_ExploreLink:hover {
+        color: #14b8a6;
     }
 
-    .mx_Header_subtitle {
-        font-size: 12px;
-        font-weight: normal;
-        margin: 8px 0 0;
+    .mx_ExploreLink:hover::after {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
     }
 
-    .mx_ButtonSignIn {
-        background-color: #368bd6;
-        color: white !important;
+    .mx_EncryptionBadge {
+        display: -webkit-inline-box;
+        display: -webkit-inline-flex;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: rgba(45, 212, 191, 0.06);
+        border: 1px solid rgba(45, 212, 191, 0.12);
+        color: rgba(255, 255, 255, 0.7);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        -webkit-animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
     }
 
-    .mx_ButtonCreateAccount {
-        background-color: #0dbd8b;
-        color: white !important;
+    .mx_EncryptionBadge:hover {
+        -webkit-transform: translateY(-2px);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(45, 212, 191, 0.15);
     }
 
-    .mx_SecondaryButton {
-        background-color: #ffffff;
-        color: #2e2f32;
+    .mx_EncryptionIcon {
+        width: 14px;
+        height: 14px;
+        color: #2DD4BF;
     }
 
-    .mx_Button_iconSignIn {
-        background-image: url("welcome/images/icon-sign-in.svg");
-    }
-    .mx_Button_iconCreateAccount {
-        background-image: url("welcome/images/icon-create-account.svg");
-    }
-    .mx_Button_iconHelp {
-        background-image: url("welcome/images/icon-help.svg");
-    }
-    .mx_Button_iconRoomDirectory {
-        background-image: url("welcome/images/icon-room-directory.svg");
+    @-webkit-keyframes fadeInScale {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
     }
 
-    /*
-.mx_WelcomePage_loggedIn is applied by EmbeddedPage from the Welcome component
-If it is set on the page, we should show the buttons. Otherwise, we have to assume
-we don't have an account and should hide them. No account == no guest account either.
- */
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    @-webkit-keyframes fadeInUp {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(12px);
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(12px);
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+    }
+
+    @-webkit-keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
     .mx_WelcomePage:not(.mx_WelcomePage_loggedIn) .mx_WelcomePage_guestFunctions {
         display: none;
     }
 
-    .mx_ButtonRow.mx_WelcomePage_guestFunctions {
-        margin-top: 20px;
-    }
-    .mx_ButtonRow.mx_WelcomePage_guestFunctions > div {
-        margin: 0 auto;
-    }
-
     @media only screen and (max-width: 480px) {
-        .mx_ButtonRow {
-            flex-direction: column;
+        .mx_Parent {
+            padding: 48px 20px;
         }
 
-        .mx_ButtonRow > * {
-            margin: 0 0 10px 0;
+        .mx_Header_title {
+            font-size: 28px;
+        }
+
+        .mx_Header_subtitle {
+            font-size: 14px;
+        }
+
+        .mx_Logo {
+            width: 64px;
+            height: 64px;
         }
     }
 </style>
 
 <div class="mx_Parent">
-    <a href="https://element.io" target="_blank" rel="noopener">
-        <img src="$logoUrl" alt="$brand" class="mx_Logo" />
-    </a>
-    <h1 class="mx_Header_title">_t("welcome_to_element")</h1>
-    <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
-    <h2 class="mx_Header_subtitle">_t("powered_by_matrix_with_logo")</h2>
+    <div class="mx_LogoContainer">
+        <a href="https://tween.im" target="_blank" rel="noopener">
+            <img src="vector-icons/1024.png" alt="Tween" class="mx_Logo" />
+        </a>
+        <h1 class="mx_Header_title">Tween</h1>
+        <p class="mx_Tagline">The Space Between</p>
+        <p class="mx_Header_subtitle">Your secure infrastructure for communication, transactions, and collaboration</p>
+    </div>
+
     <div class="mx_ButtonGroup">
         <div class="mx_ButtonRow">
-            <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
-                <div class="mx_ButtonLabel">_t("action|sign_in")</div>
+            <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn">
+                <div class="mx_ButtonLabel">Sign In</div>
             </a>
-            <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount mx_Button_iconCreateAccount">
-                <div class="mx_ButtonLabel">_t("action|create_account")</div>
+            <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount">
+                <div class="mx_ButtonLabel">Create Account</div>
             </a>
         </div>
-        <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
-            <div>
-                <a href="#/directory" class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory">
-                    <div class="mx_ButtonLabel">_t("action|explore_rooms")</div>
-                </a>
-            </div>
-        </div>
+    </div>
+
+    <div class="mx_Divider"><span>or</span></div>
+
+    <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
+        <a href="#/directory" class="mx_ExploreLink">Explore Rooms</a>
+    </div>
+
+    <div class="mx_EncryptionBadge">
+        <svg class="mx_EncryptionIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <span>End-to-end encrypted</span>
     </div>
 </div>

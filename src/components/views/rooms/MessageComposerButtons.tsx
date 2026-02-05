@@ -22,12 +22,14 @@ import {
     PollsIcon,
     StickerIcon,
     TextFormattingIcon,
+    SendIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { type MenuProps } from "../../structures/ContextMenu";
 import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { LocationButton } from "../location";
 import Modal from "../../../Modal";
@@ -93,6 +95,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton ? pollButton(room, props.relation) : null,
+            sendMoneyButton(room),
             showLocationButton(props, room, matrixClient),
         ];
     } else {
@@ -112,6 +115,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton ? pollButton(room, props.relation) : null,
+            sendMoneyButton(room),
             showLocationButton(props, room, matrixClient),
         ];
     }
@@ -361,6 +365,49 @@ function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonP
     return (
         <CollapsibleButton className="mx_MessageComposer_button" onClick={onClick} title={title}>
             <TextFormattingIcon />
+        </CollapsibleButton>
+    );
+}
+
+function sendMoneyButton(room: Room): ReactElement {
+    const onClick = (): void => {
+        const myUserId = MatrixClientPeg.safeGet()?.getSafeUserId();
+        const joinedMembers = room.getJoinedMembers();
+
+        const targetMember = joinedMembers.find((member) => {
+            if (!member.userId) return false;
+            if (member.userId === myUserId) return false;
+            if (member.userId.startsWith("@_tmcp_")) return false;
+            return true;
+        });
+
+        dis.dispatch({
+            action: Action.OpenTmcpP2p,
+            room: room,
+            targetMember: targetMember
+                ? {
+                      userId: targetMember.userId,
+                      name: targetMember.name,
+                      avatarUrl: targetMember.getAvatarUrl(
+                          MatrixClientPeg.safeGet()?.getHomeserverUrl(),
+                          32,
+                          32,
+                          "crop",
+                          false,
+                      ),
+                  }
+                : undefined,
+        });
+    };
+
+    return (
+        <CollapsibleButton
+            key="send_money"
+            className="mx_MessageComposer_button"
+            onClick={onClick}
+            title={_t("tmcp|send_money")}
+        >
+            <SendIcon />
         </CollapsibleButton>
     );
 }

@@ -8,10 +8,11 @@ Please see LICENSE files in the repository root for full details.
 */
 
 /** The types of page which can be shown by the LoggedInView */
-enum PageType {
+export enum PageType {
     HomePage = "home_page",
     RoomView = "room_view",
     UserView = "user_view",
+    TmcpStoreView = "tmcp_store_view",
 }
 
 export default PageType;

@@ -44,6 +44,7 @@ import { type IBodyProps } from "../components/views/messages/IBodyProps";
 import { ModuleApi } from "../modules/Api";
 import { TextualEventViewModel } from "../viewmodels/event-tiles/TextualEventViewModel";
 import { ElementCallEventType } from "../call-types";
+import TmcpEventBody from "../components/views/messages/TmcpEventBody";
 
 // Subset of EventTile's IProps plus some mixins
 export interface EventTileTypeProps extends Pick<
@@ -238,6 +239,10 @@ export function pickFactory(
 
     if (mxEvent.isRelation(RelationType.Replace)) {
         return noEventFactoryFactory();
+    }
+
+    if (evType.startsWith("m.tween.")) {
+        return (ref, props) => <TmcpEventBody ref={ref} {...props} />;
     }
 
     return EVENT_TILE_TYPES.get(evType) ?? noEventFactoryFactory();

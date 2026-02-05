@@ -16,9 +16,14 @@ import { type DeepReadonly, type Defaultize } from "./@types/common";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS: DeepReadonly<IConfigOptions> = {
-    brand: "Element",
-    help_url: "https://element.io/help",
-    help_encryption_url: "https://element.io/help#encryption",
+    brand: "Tween",
+    tmcp: {
+        server_url: "https://tmcp.tween.im",
+        public_client_id: "tween-web-client",
+        store_url: "https://store.tween.im",
+    },
+    help_url: "https://tween.im/help",
+    help_encryption_url: "https://tween.im/help#encryption",
     integrations_ui_url: "https://scalar.vector.im/",
     integrations_rest_url: "https://scalar.vector.im/api",
     uisi_autorageshake_app: "element-auto-uisi",
@@ -30,39 +35,28 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     },
     element_call: {
         use_exclusively: false,
-        brand: "Element Call",
-    },
-
-    // @ts-ignore - we deliberately use the camelCase version here so we trigger
-    // the fallback behaviour. If we used the snake_case version then we'd break
-    // everyone's config which has the camelCase property because our default would
-    // be preferred over their config.
-    desktopBuilds: {
-        available: true,
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        logo: require("../res/img/element-desktop-logo.svg").default,
-        url: "https://element.io/get-started",
+        brand: "Tween Call",
     },
 
     feedback: {
         existing_issues_url:
-            "https://github.com/vector-im/element-web/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
-        new_issue_url: "https://github.com/vector-im/element-web/issues/new/choose",
+            "https://github.com/Tween-IM/tween-web/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        new_issue_url: "https://github.com/Tween-IM/tween-web/issues/new/choose",
     },
 
     desktop_builds: {
         available: true,
         logo: "vector-icons/1024.png",
-        url: "https://element.io/download",
-        url_macos: "https://packages.element.io/desktop/install/macos/Element.dmg",
-        url_win64: "https://packages.element.io/desktop/install/win32/x64/Element%20Setup.exe",
-        url_win64arm: "https://packages.element.io/desktop/install/win32/arm64/Element%20Setup.exe",
-        url_linux: "https://element.io/download#linux",
+        url: "https://tween.im/download",
+        url_macos: "https://tween.im/download/macos",
+        url_win64: "https://tween.im/download/windows",
+        url_win64arm: "https://tween.im/download/windows-arm",
+        url_linux: "https://tween.im/download/linux",
     },
     mobile_builds: {
-        ios: "https://apps.apple.com/app/vector/id1083446067",
-        android: "https://play.google.com/store/apps/details?id=im.vector.app",
-        fdroid: "https://f-droid.org/repository/browse/?fdid=im.vector.app",
+        ios: "https://tween.im/download/ios",
+        android: "https://tween.im/download/android",
+        fdroid: "https://tween.im/download/fdroid",
     },
 };
 

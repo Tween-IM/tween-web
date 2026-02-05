@@ -63,6 +63,7 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { type SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import HomePage from "./HomePage";
+import TmcpStoreView from "../views/tmcp/TmcpStoreView";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 import { type ConfigOptions } from "../../SdkConfig";
@@ -727,6 +728,11 @@ class LoggedInView extends React.Component<IProps, IState> {
                     );
                 }
                 break;
+
+            case PageTypes.TmcpStoreView:
+                pageElement = <TmcpStoreView />;
+                break;
+
             default: {
                 if (moduleRenderer) {
                     pageElement = moduleRenderer();

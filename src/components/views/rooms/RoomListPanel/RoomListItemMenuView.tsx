@@ -41,16 +41,26 @@ interface RoomListItemMenuViewProps {
      * The room to display the menu for.
      */
     room: Room;
+
+    /**
+     * Callback to handle menu click events.
+     */
+    onMenuClick?: (e: React.MouseEvent) => void;
 }
 
 /**
  * A view for the room list item menu.
  */
-export function RoomListItemMenuView({ room, className }: RoomListItemMenuViewProps): JSX.Element {
+export function RoomListItemMenuView({ room, className, onMenuClick }: RoomListItemMenuViewProps): JSX.Element {
     const vm = useRoomListItemMenuViewModel(room);
 
     return (
-        <Flex className={classNames("mx_RoomListItemMenuView", className)} align="center" gap="var(--cpd-space-1x)">
+        <Flex
+            className={classNames("mx_RoomListItemMenuView", className)}
+            align="center"
+            gap="var(--cpd-space-1x)"
+            onClick={onMenuClick}
+        >
             {vm.showMoreOptionsMenu && <MoreOptionsMenu vm={vm} />}
             {vm.showNotificationMenu && <NotificationMenu vm={vm} />}
         </Flex>

@@ -142,6 +142,11 @@ import Markdown from "../../Markdown";
 import { sanitizeHtmlParams } from "../../Linkify";
 import { isOnlyAdmin } from "../../utils/membership";
 import { ModuleApi } from "../../modules/Api.ts";
+import TmcpPaymentDialog from "../views/dialogs/TmcpPaymentDialog";
+import TmcpP2pDialog from "../views/dialogs/TmcpP2pDialog";
+import { TmcpWidgetDriver } from "../../stores/widgets/TmcpWidgetDriver";
+import ModalWidgetDialog from "../views/dialogs/ModalWidgetDialog";
+import { WidgetType } from "../../widgets/WidgetType";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -968,6 +973,58 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     false,
                     true,
                 );
+                break;
+            case Action.OpenTmcpPayment:
+                Modal.createDialog(TmcpPaymentDialog, {
+                    widget: payload.widget,
+                    data: payload.data,
+                });
+                break;
+            case Action.OpenTmcpGift:
+                // TmcpGiftDialog implementation pending, fallback to generic for now
+                logger.log("Opening TMCP Gift Dialog", payload.data);
+                // Reject pending promise so widget doesn't hang indefinitely
+                if (payload.promiseId) {
+                    TmcpWidgetDriver.rejectPromise(payload.promiseId, new Error("Gift dialog not implemented"));
+                }
+                break;
+            case Action.ViewRoom:
+                // TmcpStoreView is now handled by LoggedInView as a proper page
+                if (payload.page_type !== PageType.TmcpStoreView) {
+                    // Fallback to original behavior for non-TMCP pages
+                    const storeUrl = SdkConfig.get("tmcp")?.store_url || "https://store.tween.im";
+                    Modal.createDialog(ModalWidgetDialog, {
+                        widgetDefinition: {
+                            id: "tmcp-store",
+                            url: storeUrl,
+                            name: _t("tmcp|mini_app_store"),
+                            type: WidgetType.CUSTOM.preferred,
+                        },
+                        sourceWidgetId: "tmcp-store",
+                    });
+                }
+                break;
+                {
+                    const storeUrl = SdkConfig.get("tmcp")?.store_url || "https://store.tween.im";
+                    Modal.createDialog(ModalWidgetDialog, {
+                        widgetDefinition: {
+                            id: "tmcp-store",
+                            url: storeUrl,
+                            name: _t("tmcp|mini_app_store"),
+                            type: WidgetType.CUSTOM.preferred,
+                        },
+                        sourceWidgetId: "tmcp-store",
+                    });
+                    break;
+                }
+            case Action.OpenTmcpStore:
+                this.setPage(PageType.TmcpStoreView);
+                break;
+            case Action.OpenTmcpP2p:
+                Modal.createDialog(TmcpP2pDialog, {
+                    room: payload.room,
+                    targetMember: payload.targetMember,
+                });
                 break;
         }
     };

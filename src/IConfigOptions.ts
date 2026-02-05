@@ -216,6 +216,11 @@ export interface IConfigOptions {
     };
 
     modules?: string[];
+    tmcp?: {
+        server_url: string;
+        public_client_id: string;
+        store_url: string;
+    };
 }
 
 export interface ISsoRedirectOptions {

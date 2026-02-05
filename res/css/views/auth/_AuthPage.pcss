@@ -18,7 +18,7 @@ Please see LICENSE files in the repository root for full details.
 .mx_AuthPage_modal {
     display: flex;
     margin: 100px auto auto;
-    border-radius: var(--cpd-space-6x);
+    border-radius: 24px;
     background-color: $authpage-modal-bg-color;
 
     @media only screen and (max-height: 768px) {
@@ -30,12 +30,15 @@ Please see LICENSE files in the repository root for full details.
     }
 
     &.mx_AuthPage_modal_withBlur {
-        /* Apply a blurred shadow around the modal */
-        box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.33);
+        /* Apply glass morphism effect */
+        border: 1px solid $authpage-glass-border-color;
+        box-shadow: $authpage-glass-shadow;
 
         .mx_AuthPage_modalContent {
-            /* Make the modal's background semitransparent */
+            /* Make the modal's background semitransparent with backdrop filter */
             background-color: $authpage-modal-content-with-blur-bg-color;
+            backdrop-filter: blur($authpage-glass-blur) saturate($authpage-glass-saturate);
+            -webkit-backdrop-filter: blur($authpage-glass-blur) saturate($authpage-glass-saturate);
         }
     }
 }

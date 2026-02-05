@@ -30,6 +30,7 @@ import {
     UserProfileSolidIcon,
     PlusIcon,
     ChevronRightIcon,
+    WebBrowserIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
@@ -279,6 +280,30 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
     );
 };
 
+const TmcpStoreButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed">> = ({ isPanelCollapsed }) => {
+    const onTmcpStoreClick = () => {
+        defaultDispatcher.dispatch({ action: Action.OpenTmcpStore });
+    };
+
+    return (
+        <li
+            className={classNames("mx_SpaceItem", {
+                collapsed: isPanelCollapsed,
+            })}
+            role="treeitem"
+            aria-selected={false}
+        >
+            <SpaceButton
+                label={_t("tmcp|mini_app_store")}
+                onClick={onTmcpStoreClick}
+                isNarrow={isPanelCollapsed}
+                size="32px"
+                icon={<WebBrowserIcon />}
+            />
+        </li>
+    );
+};
+
 const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
     [MetaSpace.Home]: HomeButton,
     [MetaSpace.Favourites]: FavouritesButton,
@@ -470,6 +495,8 @@ const SpacePanel: React.FC = () => {
                         </Droppable>
 
                         <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
+
+                        <TmcpStoreButton isPanelCollapsed={isPanelCollapsed} />
 
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </nav>
